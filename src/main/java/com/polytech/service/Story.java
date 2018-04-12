@@ -1,4 +1,4 @@
-package service;
+package com.polytech.service;
 
 import java.util.Objects;
 
@@ -21,5 +21,9 @@ public class Story {
     public int hashCode() {
 
         return Objects.hash(content);
+    }
+
+    public String getContent() {
+        return this.content;
     }
 }
