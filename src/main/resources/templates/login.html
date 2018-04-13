@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="pnet">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
     <style>
@@ -46,8 +46,8 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/feed">Feed</a></li>
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/feed">Feed</a></li>
                 <li><a href="">Contact</a></li>
             </ul>
         </div><!--/.nav-collapse -->
@@ -55,20 +55,22 @@
 </div>
 
 <div class="container">
-
-    <div ng-controller="DemoController as ctrl">
-            tot:{{ctrl.content}}
+    <div class="starter-template">
         <form action="" method="post" role="form">
-            <legend>Your post</legend>
+            <legend>Connection</legend>
+
             <div class="form-group">
-                <input type="text" ng-model="ctrl.content" class="form-control" placeholder="What's on your mind today !">
+                <label for="username">Username :</label>
+                <input type="text" class="form-control" name="username" id="username"/>
             </div>
-            <input type="button"
-                   ng-click="ctrl.share()"
-                   class="btn btn-primary" value="Share">
-            </input>
+            <div class="form-group">
+                <label for="password">Password :</label>
+                <input type="password" class="form-control" name="password" id="password"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
 </div><!-- /.container -->
 
 <!-- Bootstrap core JavaScript
@@ -76,27 +78,5 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-
-<script type="text/javascript">
-    angular.module("pnet", [])
-        .controller('DemoController', function ($http) {
-            var self = this;
-            self.content = "";
-            self.feeds = [];
-            $http.get('/rest/feed').then(function (response) {
-                self.feeds = response.data;
-            });
-            self.share = function () {
-                var body = {"content": self.content};
-                $http.post('/rest/feed', body)
-                    .then(function (response) {
-                        var story = response.data;
-                        self.feeds.push(story);
-                        self.content = "";
-                    });
-            }
-        });
-</script>
 </body>
 </html>

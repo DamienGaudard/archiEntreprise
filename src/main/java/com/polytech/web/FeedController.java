@@ -12,8 +12,8 @@ import java.util.List;
 
 @Controller
 public class FeedController {
-    FeedService feedService;
-    PublicationService publicationService;
+    private FeedService feedService;
+    private PublicationService publicationService;
 
     public FeedController(FeedService feedService, PublicationService publicationService){
         this.feedService = feedService;

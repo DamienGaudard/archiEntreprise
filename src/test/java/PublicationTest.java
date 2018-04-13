@@ -26,7 +26,7 @@ public class PublicationTest {
     @Ignore
     public void should_post_story(){
         //GIVEN
-        Story story = new Story("hi INFO4");
+        String story = "hi INFO4";
         //FeedController feedController = new FeedController();
 
         //WHEN

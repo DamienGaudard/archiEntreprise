@@ -36,6 +36,11 @@ public class AppConfig {
     }
 
     @Bean
+    public JdbcStoryRepository jdbcStoryRepository(DataSource dataSource) throws SQLException {
+        return new JdbcStoryRepository(dataSource.getConnection());
+    }
+
+    @Bean
     public DataSource dataSource(){
         return new EmbeddedDatabaseBuilder()
                 //.addScripts("schema.sql")
