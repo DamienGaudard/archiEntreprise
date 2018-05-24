@@ -4,9 +4,11 @@ import java.util.Objects;
 
 public class Story {
     private String content;
+    private String username;
 
-    public Story(String content){
+    public Story(String content, String username){
         this.content = content;
+        this.username = username;
     }
 
     @Override
@@ -25,5 +27,10 @@ public class Story {
 
     public String getContent() {
         return this.content;
+    }
+
+
+    public String getUsername() {
+        return username;
     }
 }

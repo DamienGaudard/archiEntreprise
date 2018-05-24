@@ -55,21 +55,18 @@
 
 <div class="container">
     <div class="starter-template">
-        <form action="/login" method="post" role="form">
-            <legend>Connexion</legend>
+
+    <div id="ModifyArea">
+        <form action="/modify" method="post" role="form">
+            <legend>Edit your post-it ...</legend>
 
             <div class="form-group">
-                <label for="username">Username :</label>
-                <input type="text" class="form-control" name="username" id="username"/>
+                <textarea class="form-control" name="newContent" id="" placeholder="What do you want to change?"></textarea>
             </div>
-            <div class="form-group">
-                <label for="password">Password :</label>
-                <input type="password" class="form-control" name="password" id="password"/>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary pull-right">OK</button>
         </form>
     </div>
-
+    </div>
 </div><!-- /.container -->
 
 <!-- Bootstrap core JavaScript

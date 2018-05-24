@@ -1,47 +1,58 @@
 package com.polytech.persistence;
 
 import com.polytech.service.Story;
+import com.polytech.service.User;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.Connection;
+import java.security.Principal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcStoryRepository implements StoryRepository {
 
-    private Connection connection;
+    private JdbcTemplate jdbcTemplate;
 
-    public JdbcStoryRepository(Connection connection) {
-        this.connection = connection;
+    public JdbcStoryRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public void save(Story story) {
-        String query = "INSERT INTO STORY (CONTENT) VALUES('"+story.getContent()+"')";
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        String queryUsername = "INSERT INTO STORY (USERNAME,CONTENT) VALUES(?,?)";
+        jdbcTemplate.update(queryUsername,story.getUsername(),story.getContent());
+
     }
 
-    public List<Story> fetch() {
-        String query = "SELECT * FROM STORY";
-        List<Story> stories = new ArrayList<>();
+    public List<Story> fetch(final Principal principal) {
 
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+        String query = "SELECT * FROM STORY WHERE USERNAME='"+principal.getName()+"'";
 
-            while(resultSet.next()){
+        return jdbcTemplate.query(query,new RowMapper<Story>() {
+            @Override
+            public Story mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+
+                String username = resultSet.getString("USERNAME");
+                System.out.println("username" + username);
                 String content = resultSet.getString("CONTENT");
-                stories.add(new Story(content));
+                System.out.println("contenu " + content);
+                return new Story(content, username);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return stories;
+        });
+    }
+
+    @Override
+    public void remove(String content, Principal principal) {
+        String queryDelete = "DELETE FROM STORY WHERE USERNAME='"+principal.getName()+"' AND CONTENT='"+content+"'";
+        System.out.println(queryDelete);
+        jdbcTemplate.update(queryDelete);
+    }
+
+    @Override
+    public void edit(String newContent, String content, Principal principal) {
+        String queryUpdate = "UPDATE STORY SET CONTENT='" + newContent +"'WHERE USERNAME='"+principal.getName()+"' AND CONTENT='"+content+"'";
+        System.out.println(queryUpdate);
+        jdbcTemplate.update(queryUpdate);
     }
 }

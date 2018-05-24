@@ -1,19 +1,20 @@
 package com.polytech.web;
 
-import com.polytech.service.FeedService;
-import com.polytech.service.PublicationService;
-import com.polytech.service.Story;
+import com.polytech.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
 public class FeedController {
     private FeedService feedService;
     private PublicationService publicationService;
+    private String content;
 
     public FeedController(FeedService feedService, PublicationService publicationService){
         this.feedService = feedService;
@@ -25,15 +26,42 @@ public class FeedController {
     }
 
     @RequestMapping(value = "/share", method = RequestMethod.POST)
-    public String post(String content) {
-        publicationService.share(new Story(content));
+    public String post(String content, Principal principal) {
+        publicationService.share(new Story(content, principal.getName()));
         return "redirect:/feed";
     }
 
     @RequestMapping(value = "/feed", method = RequestMethod.GET)
-    public String feed(Model model) {
-        List<Story> stories = feedService.fetchAllFeeds();
+    public String feed(Model model,Principal principal) {
+        List<Story> stories = feedService.fetchAllFeeds(principal);
         model.addAttribute("stories",stories);
         return "feed";
     }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String delete(String content, Principal principal) {
+        System.out.println("contenu du delete "+ content);
+        publicationService.delete(content, principal);
+        return "redirect:/feed";
+    }
+
+
+    @RequestMapping(value = "/modify", method = RequestMethod.POST)
+    public String modify(String newContent, Principal principal) {
+        System.out.println("contenu modify "+ newContent);
+        publicationService.edit(newContent,this.content,principal);
+        return "redirect:/feed";
+    }
+    @RequestMapping(value="/modify",method = RequestMethod.GET)
+    public String modifyPage(){
+        return "/modify";
+    }
+    @RequestMapping(value = "/setContent", method = RequestMethod.POST)
+    public String setContent(String content){
+        System.out.println("on récupère le contenu à modifier  "+ content);
+        this.content=content;
+        return "redirect:/modify";
+    }
+
+
 }
