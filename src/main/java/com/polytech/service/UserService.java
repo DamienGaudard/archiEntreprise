@@ -1,14 +1,14 @@
 package com.polytech.service;
 
-import com.polytech.persistence.UserRepository;
+import com.polytech.persistence.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserService {
 
-    private UserRepository userRepository;
+    private UserRepo userRepository;
     private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepo userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }

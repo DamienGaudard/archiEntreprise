@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class JdbcUserRepository implements UserRepository {
+public class JdbcUserRepository implements UserRepo {
 
 
     private DataSource dataSource ;

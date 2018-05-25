@@ -1,10 +1,9 @@
 package com.polytech.config;
 
 import com.polytech.persistence.JdbcUserRepository;
-import com.polytech.persistence.UserRepository;
+import com.polytech.persistence.UserRepo;
 import com.polytech.service.UserService;
 import com.polytech.web.RegisterController;
-import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -68,13 +67,13 @@ public class AppConfig {
         return dataSource;*/
     }
     @Bean
-    public UserRepository userRepository (DataSource dataSource){
+    public UserRepo userRepo (DataSource dataSource){
         return new JdbcUserRepository(dataSource);
     }
 
     @Bean
-    public UserService userService (UserRepository userRepository, PasswordEncoder passwordEncoder){
-        return new UserService(userRepository,passwordEncoder);
+    public UserService userService (UserRepo userRepo, PasswordEncoder passwordEncoder){
+        return new UserService(userRepo,passwordEncoder);
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
