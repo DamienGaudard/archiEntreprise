@@ -13,6 +13,7 @@ import com.polytech.persistence.StoryRepository;
 import com.polytech.service.FeedService;
 import com.polytech.service.PublicationService;
 import com.polytech.web.FeedController;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -54,9 +55,9 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource(){
-        /*return new EmbeddedDatabaseBuilder()
-                .build();*/
-        String url = "jdbc:mysql://localhost:3306/polytech";
+        return new EmbeddedDatabaseBuilder()
+                .build();
+        /*String url = "jdbc:mysql://localhost:3306/polytech";
         String username="root";
         String password="root";
 
@@ -64,7 +65,7 @@ public class AppConfig {
         dataSource.setJdbcUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-        return dataSource;
+        return dataSource;*/
     }
     @Bean
     public UserRepo userRepo (DataSource dataSource){
