@@ -56,6 +56,7 @@ public class FeedController {
     public String modifyPage(){
         return "/modify";
     }
+
     @RequestMapping(value = "/setContent", method = RequestMethod.POST)
     public String setContent(String content){
         System.out.println("on récupère le contenu à modifier  "+ content);
