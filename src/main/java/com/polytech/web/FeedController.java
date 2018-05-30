@@ -52,7 +52,7 @@ public class FeedController {
     }
     @RequestMapping(value="/modify",method = RequestMethod.GET)
     public String modifyPage(){
-        return "/modify";
+        return "modify";
     }
 
     @RequestMapping(value = "/setContent", method = RequestMethod.POST)
