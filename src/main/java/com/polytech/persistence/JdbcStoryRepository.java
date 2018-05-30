@@ -34,9 +34,7 @@ public class JdbcStoryRepository implements StoryRepository {
             public Story mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 
                 String username = resultSet.getString("USERNAME");
-                System.out.println("username" + username);
                 String content = resultSet.getString("CONTENT");
-                System.out.println("contenu " + content);
                 return new Story(content, username);
             }
         });
@@ -45,14 +43,12 @@ public class JdbcStoryRepository implements StoryRepository {
     @Override
     public void remove(String content, Principal principal) {
         String queryDelete = "DELETE FROM STORY WHERE USERNAME='"+principal.getName()+"' AND CONTENT='"+content+"'";
-        System.out.println(queryDelete);
         jdbcTemplate.update(queryDelete);
     }
 
     @Override
     public void edit(String newContent, String content, Principal principal) {
         String queryUpdate = "UPDATE STORY SET CONTENT='" + newContent +"'WHERE USERNAME='"+principal.getName()+"' AND CONTENT='"+content+"'";
-        System.out.println(queryUpdate);
         jdbcTemplate.update(queryUpdate);
     }
 }

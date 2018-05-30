@@ -40,7 +40,6 @@ public class FeedController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(String content, Principal principal) {
-        System.out.println("contenu du delete "+ content);
         publicationService.delete(content, principal);
         return "redirect:/feed";
     }
@@ -48,7 +47,6 @@ public class FeedController {
 
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String modify(String newContent, Principal principal) {
-        System.out.println("contenu modify "+ newContent);
         publicationService.edit(newContent,this.content,principal);
         return "redirect:/feed";
     }
@@ -59,7 +57,6 @@ public class FeedController {
 
     @RequestMapping(value = "/setContent", method = RequestMethod.POST)
     public String setContent(String content){
-        System.out.println("on récupère le contenu à modifier  "+ content);
         this.content=content;
         return "redirect:/modify";
     }

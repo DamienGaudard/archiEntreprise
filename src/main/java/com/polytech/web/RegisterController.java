@@ -19,20 +19,17 @@ public class RegisterController {
 
     @RequestMapping(value="/register",method = RequestMethod.GET)
     public String registerPage(){
-        System.out.println("register get");
-        return "/register";
+        return "register";
     }
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public String register(User user){
         userService.addUser(user);
-        System.out.println("register controller");
-        System.out.println(user);
         return "register";
     }
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
     public String loginPage(){
-        return "/login";
+        return "login";
     }
 }
